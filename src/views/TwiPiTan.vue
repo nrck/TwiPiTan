@@ -1,7 +1,7 @@
 <template>
   <div class="TwiPiTan m-3">
     <div class="row m-2">
-      <BarAndNumber class="w-50 p-3 border" max="60" value="60" label="Time"/>
+      <BarAndNumber class="w-50 p-3 border" max="60" :value="lastTime" label="Time"/>
       <BarAndNumber class="w-50 p-3 border" max="100" value="0" label="Point"/>
     </div>
 
@@ -43,6 +43,8 @@ import CharButton from "@/components/CharButton.vue";
 })
 export default class HoTwiPiTanme extends Vue {
   public answer = "";
+  public isStart = false;
+  public lastTime = 60;
   rows = [
     [
       { char: "　" },
@@ -106,9 +108,23 @@ export default class HoTwiPiTanme extends Vue {
   }
 
   public addChar(value: string, callback: Function) {
+    if(!this.isStart) {
+      this.isStart = true;
+      this.countDownTimer();
+      console.log("start");
+    }
     this.answer += value;
     console.log("add   :" + value);
     callback(true);
+  }
+
+  private countDownTimer() {
+    this.lastTime--;
+    if(this.lastTime != 0){
+      setTimeout(() => {
+        this.countDownTimer();
+      }, 1000);
+    }
   }
 }
 </script>
