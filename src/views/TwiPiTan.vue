@@ -21,12 +21,17 @@
 
     <div class="row m-2">
       <div class="w-50 p-1">
-        <b-button class="w-100" variant="primary">ヒント</b-button>
+        <b-button class="w-100" variant="primary" @click="onClickShowHint" v-b-modal.TwitterHint>ヒント</b-button>
       </div>
       <div class="w-50 p-1">
         <b-button class="w-100" variant="primary" @click="onClickAnswerButton">こたる</b-button>
       </div>
     </div>
+
+    <b-modal id="TwitterHint" title="ヒント" ok-only>
+      <p class="p-1 mt-1">{{ this.hint.tweet }}</p>
+      <p class="p-1 mb-1 text-right">by {{ this.hint.screenName }}</p>
+    </b-modal>
   </div>
 </template>
 
@@ -44,8 +49,12 @@ import CharButton from "@/components/CharButton.vue";
 export default class HoTwiPiTanme extends Vue {
   public answer = "";
   public isStart = false;
-  public lastTime = 60;
+  public lastTime = 0;
   public point = 0;
+  public hint = {
+    screenName: "",
+    tweet: ""
+  };
   private baseApiUrl = "http://127.0.0.1/";
   private answers = [
     "とうきょう",
@@ -105,6 +114,10 @@ export default class HoTwiPiTanme extends Vue {
     ]
   ];
 
+  public created() {
+    this.lastTime = 60;
+  }
+
   public deleteChar(value: string, callback: Function) {
     var char = this.answer.charAt(this.answer.length - 1);
     if (char != value) {
@@ -149,6 +162,11 @@ export default class HoTwiPiTanme extends Vue {
     if (this.answers.length == 0) {
       console.log("終了！：" + this.point);
     }
+  }
+
+  public onClickShowHint() {
+    this.hint.tweet = "ひんとひんと";
+    this.hint.screenName = "@hogehoge";
   }
 }
 </script>
