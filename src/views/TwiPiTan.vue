@@ -24,7 +24,7 @@
         <b-button class="w-100" variant="primary">ヒント</b-button>
       </div>
       <div class="w-50 p-1">
-        <b-button class="w-100" variant="primary">こたる</b-button>
+        <b-button class="w-100" variant="primary" @click="onClickAnswerButton">こたる</b-button>
       </div>
     </div>
   </div>
@@ -45,46 +45,54 @@ export default class HoTwiPiTanme extends Vue {
   public answer = "";
   public isStart = false;
   public lastTime = 60;
+  private baseApiUrl = "http://127.0.0.1/";
+  private answers = [
+    "とうきょう",
+    "いけぶくろ",
+    "しんじゅく",
+    "しながわ",
+    "うえの"
+  ];
   rows = [
     [
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
+      { char: "と" },
+      { char: "う" },
+      { char: "き" },
+      { char: "ょ" },
+      { char: "う" },
+      { char: "　" }
+    ],
+    [
+      { char: "い" },
+      { char: "け" },
+      { char: "ぶ" },
+      { char: "く" },
+      { char: "ろ" },
+      { char: "　" }
+    ],
+    [
+      { char: "し" },
+      { char: "ん" },
+      { char: "じ" },
+      { char: "ゅ" },
+      { char: "く" },
       { char: "　" }
     ],
     [
       { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
+      { char: "し" },
+      { char: "な" },
+      { char: "が" },
+      { char: "わ" },
       { char: "　" }
     ],
     [
       { char: "　" },
+      { char: "う" },
       { char: "　" },
+      { char: "え" },
       { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" }
-    ],
-    [
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" }
-    ],
-    [
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" },
-      { char: "　" }
+      { char: "の" }
     ],
     [
       { char: "　" },
@@ -108,7 +116,7 @@ export default class HoTwiPiTanme extends Vue {
   }
 
   public addChar(value: string, callback: Function) {
-    if(!this.isStart) {
+    if (!this.isStart) {
       this.isStart = true;
       this.countDownTimer();
       console.log("start");
@@ -120,11 +128,21 @@ export default class HoTwiPiTanme extends Vue {
 
   private countDownTimer() {
     this.lastTime--;
-    if(this.lastTime != 0){
+    if (this.lastTime != 0) {
       setTimeout(() => {
         this.countDownTimer();
       }, 1000);
     }
+  }
+
+  public onClickAnswerButton() {
+    this.answers.forEach((item, index) => {
+      if (item == this.answer) {
+        this.answer = "";
+        console.log("正解");
+        this.answers.splice(index, 1);
+      }
+    });
   }
 }
 </script>
