@@ -1,11 +1,13 @@
 <template>
   <div>
-    <span>{{ label }}：{{ value }}</span>
+    <b-progress :max="this.max" height="3rem">
+      <b-progress-bar class="text-left" :value="this.value">{{ label }}: {{ value }}</b-progress-bar>
+    </b-progress>
   </div>
 </template>
 
 <script lang="ts">
-import { Prop, Component, Vue } from 'vue-property-decorator';
+import { Prop, Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class BarAndNumber extends Vue {

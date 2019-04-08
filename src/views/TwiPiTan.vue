@@ -1,8 +1,8 @@
 <template>
   <div class="TwiPiTan m-3">
     <div class="row m-2">
-      <BarAndNumber class="w-50 p-3 border" max="60" :value="lastTime" label="Time"/>
-      <BarAndNumber class="w-50 p-3 border" max="100" :value="point" label="Point"/>
+      <BarAndNumber class="w-50 p-3 border" max="60" :value="lastTime" label="残り時間"/>
+      <BarAndNumber class="w-50 p-3 border" max="10000" :value="point" label="得点"/>
     </div>
 
     <b-form-input class="mt-3 mb-3" :value="this.answer"></b-form-input>
