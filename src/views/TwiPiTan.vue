@@ -5,11 +5,18 @@
       <BarAndNumber class="w-50 p-3 border" max="100" value="0" label="Point"/>
     </div>
 
-    <b-form-input class="mt-3 mb-3" v-model="text"></b-form-input>
+    <b-form-input class="mt-3 mb-3" :value="this.answer"></b-form-input>
 
     <div class="container pl-3 pr-3 mt-4 mb-4">
       <div class="row m-0" v-for="row in rows" v-bind:key="row">
-        <CharButton class="col-2 p-0" v-for="col in row" v-bind:key="col" v-bind:char="col.char"></CharButton>
+        <CharButton
+          class="col-2 p-0"
+          v-for="col in row"
+          v-bind:key="col"
+          v-bind:char="col.char"
+          @onAddChar="addChar"
+          @onDeleteChar="deleteChar"
+        ></CharButton>
       </div>
     </div>
 
@@ -36,6 +43,7 @@ import CharButton from "@/components/CharButton.vue";
   }
 })
 export default class HoTwiPiTanme extends Vue {
+  public answer = "";
   rows = [
     [
       { char: "　" },
@@ -86,6 +94,23 @@ export default class HoTwiPiTanme extends Vue {
       { char: "　" }
     ]
   ];
+
+  public deleteChar(value: string, callback: Function) {
+    var char = this.answer.charAt(this.answer.length - 1);
+    if (char != value) {
+      callback(false);
+      return;
+    }
+    this.answer = this.answer.slice(0, this.answer.length - 1);
+    console.log("delete:" + value);
+    callback(true);
+  }
+
+  public addChar(value: string, callback: Function) {
+    this.answer += value;
+    console.log("add   :" + value);
+    callback(true);
+  }
 }
 </script>
 
