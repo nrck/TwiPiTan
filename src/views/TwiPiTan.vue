@@ -2,7 +2,7 @@
   <div class="TwiPiTan m-3">
     <div class="row m-2">
       <BarAndNumber class="w-50 p-3 border" max="60" :value="lastTime" label="Time"/>
-      <BarAndNumber class="w-50 p-3 border" max="100" value="0" label="Point"/>
+      <BarAndNumber class="w-50 p-3 border" max="100" :value="point" label="Point"/>
     </div>
 
     <b-form-input class="mt-3 mb-3" :value="this.answer"></b-form-input>
@@ -45,6 +45,7 @@ export default class HoTwiPiTanme extends Vue {
   public answer = "";
   public isStart = false;
   public lastTime = 60;
+  public point = 0;
   private baseApiUrl = "http://127.0.0.1/";
   private answers = [
     "とうきょう",
@@ -138,11 +139,16 @@ export default class HoTwiPiTanme extends Vue {
   public onClickAnswerButton() {
     this.answers.forEach((item, index) => {
       if (item == this.answer) {
+        this.point += this.lastTime * item.length;
         this.answer = "";
         console.log("正解");
         this.answers.splice(index, 1);
       }
     });
+
+    if (this.answers.length == 0) {
+      console.log("終了！：" + this.point);
+    }
   }
 }
 </script>
