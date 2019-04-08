@@ -8,11 +8,10 @@
     <b-form-input class="mt-3 mb-3" :value="this.answer"></b-form-input>
 
     <div class="container pl-3 pr-3 mt-4 mb-4">
-      <div class="row m-0" v-for="row in rows" v-bind:key="row">
+      <div class="row m-0" v-for="row in rows">
         <CharButton
           class="col-2 p-0"
           v-for="col in row"
-          v-bind:key="col"
           v-bind:char="col.char"
           @onAddChar="addChar"
           @onDeleteChar="deleteChar"
